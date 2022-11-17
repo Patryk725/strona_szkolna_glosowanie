@@ -15,3 +15,16 @@ body {
 img {
   image-rendering: crisp-edges;
 }
+
+@media only screen and (max-width: 800px) {
+  .section--left {
+    display: none;
+  }
+
+  .section--right {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
