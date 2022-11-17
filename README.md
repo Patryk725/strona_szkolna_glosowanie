@@ -1,4 +1,4 @@
-## 🤦‍♂️ _Witajcie w szkolnym głosowaniu na mistrzostwa świata w Katarze._ 🌐
+## 🙋‍♂️ _Witajcie w szkolnym głosowaniu na mistrzostwa świata w Katarze._ 🌐
 ### Na naszej stronie📄 możecie spróbować waszych sił w obstawianiu🎰 kto wygra mistrzostwa świata.
 ### Dla pierwszych trzech🥇🥈🥉 miejsc, które odgadną przyszłych mistrzów świata🌐 jest przewidywana nagroda🏆. 
 
