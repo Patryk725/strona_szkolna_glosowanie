@@ -102,6 +102,35 @@
   .voting__submit button:hover {
     background-color: #35B6FF;
   }
+
+  .login--card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .login--form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 3rem;
+    background-color: #dddddd;
+    border: 2px solid #000000;
+    border-radius: .5rem;
+  }
+  
+  .login--form input[type="submit"] {
+    width: 100%;
+    padding: 1rem 0;
+    border: none;
+    cursor: pointer;
+  }
+
+  .login--form input[type="text"] {
+    padding: .4rem 1rem;
+    font-family: inherit;
+  }
 </style>
 
 <main>
@@ -144,6 +173,17 @@
             Oddaj głos
           </button>
         </div>
+        <div class="login--card">
+          <form class="login--form">
+            <!-- <label for="name">Imie:</label> -->
+            <input type="text" name="name" id="name" placeholder="imie">
+            <!-- <label for="surname">Nazwisko:</label> -->
+            <input type="text" name="surname" id="surname" placeholder="nazwisko">
+            <!-- <label for="class">Klasa:</label> -->
+            <input type="text" name="class" id="class" placeholder="twoja klasa">
+            <input type="submit" value="Zaloguj się">
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -152,8 +192,5 @@
 <script>
   function handleVoting() {
     alert('musisz być zalogowany, aby oddać głos');
-  }
-  function handleModal() {
-    this.showModal();
   }
 </script>
