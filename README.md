@@ -6,5 +6,5 @@
 #### To będzie pierwszy mundial, który zostanie rozegrany jesienią🧣. To również ostatni mundial🏆, w którym wezmą udział 32 drużyny.
 
 
-#### Do projektu zgłosili się🧐 _Kacper R.👦🏻 Patryk K.🤓 Ksawery B.👦🏻 z klasy 4igP👨🏻‍🎓_ korzystalismy podczas tego projektu z _framework:svelt_
+#### Do projektu zgłosili się🧐 _Kacper R.👦🏻 Patryk K.😎 Ksawery B.👦🏻 z klasy 4igP👨🏻‍🎓_ korzystalismy podczas tego projektu z _framework:svelt_
 
