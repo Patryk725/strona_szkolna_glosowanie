@@ -44,5 +44,7 @@
 		grid-template-columns: repeat(2, 1fr);
 		gap: 2rem;
 		width: 100%;
+		padding: 1rem;
+  		grid-column-start: span 2;
 	}
 </style>
