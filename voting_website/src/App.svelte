@@ -14,7 +14,7 @@
             zaloguj się
           </li>
           <li class="option--login_option">
-            profil
+            twój profil
           </li>
         </ul>
       </nav>
