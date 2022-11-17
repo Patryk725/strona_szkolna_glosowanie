@@ -18,7 +18,6 @@
           </li>
         </ul>
       </nav>
-      <!-- v -->
       <Vote />
     </div>
   </div>
