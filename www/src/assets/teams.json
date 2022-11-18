@@ -1,0 +1,162 @@
+[
+	{
+		"name": "Argentyna",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/ARG",
+		"id": 0
+	},
+	{
+		"name": "Australia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/AUS",
+		"id": 1
+	},
+	{
+		"name": "Belgia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/BEL",
+		"id": 2
+	},
+	{
+		"name": "Brazylia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/BRA",
+		"id": 3
+	},
+	{
+		"name": "Kamerun",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/CMR",
+		"id": 4
+	},
+	{
+		"name": "Kanada",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/CAN",
+		"id": 5
+	},
+	{
+		"name": "Costa Rica",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/CRC",
+		"id": 6
+	},
+	{
+		"name": "Chorwacja",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/CRO",
+		"id": 7
+	},
+	{
+		"name": "Dania",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/DEN",
+		"id": 8
+	},
+	{
+		"name": "Ekwador",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/ECU",
+		"id": 9
+	},
+	{
+		"name": "Anglia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/ENG",
+		"id": 10
+	},
+	{
+		"name": "Francja",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/FRA",
+		"id": 11
+	},
+	{
+		"name": "Niemcy",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/GER",
+		"id": 12
+	},
+	{
+		"name": "Ghana",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/GHA",
+		"id": 13
+	},
+	{
+		"name": "Iran",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/IRN",
+		"id": 14
+	},
+	{
+		"name": "Japonia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/JPN",
+		"id": 15
+	},
+	{
+		"name": "Korea Południowa",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/KOR",
+		"id": 16
+	},
+	{
+		"name": "Meksyk",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/MEX",
+		"id": 17
+	},
+	{
+		"name": "Maroko",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/MAR",
+		"id": 18
+	},
+	{
+		"name": "Niderlandy",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/NED",
+		"id": 19
+	},
+	{
+		"name": "Polska",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/POL",
+		"id": 20
+	},
+	{
+		"name": "Portugalia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/POR",
+		"id": 21
+	},
+	{
+		"name": "Katar",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/QAT",
+		"id": 22
+	},
+	{
+		"name": "Arabia Saudyjska",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/KSA",
+		"id": 23
+	},
+	{
+		"name": "Senegal",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/SEN",
+		"id": 24
+	},
+	{
+		"name": "Serbia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/SRB",
+		"id": 25
+	},
+	{
+		"name": "Hiszpania",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/ESP",
+		"id": 26
+	},
+	{
+		"name": "Szwajcaria",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/SUI",
+		"id": 27
+	},
+	{
+		"name": "Tunezja",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/TUN",
+		"id": 28
+	},
+	{
+		"name": "USA",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/USA",
+		"id": 29
+	},
+	{
+		"name": "Urugwaj",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/URU",
+		"id": 30
+	},
+	{
+		"name": "Walia",
+		"img": "https://cloudinary.fifa.com/api/v3/picture/flags-sq-4/WAL",
+		"id": 31
+	}
+]
