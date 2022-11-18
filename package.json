@@ -1,7 +1,9 @@
 {
   "name": "glosowanie",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+	"dev": "PORT=8080 PORT_SSL=8443 CERT='server/tempssl/cert.pem' KEY='server/tempssl/key.pem' node server/main.js"
+  },
   "dependencies": {
     "express": "^4.18.2"
   }
