@@ -7,7 +7,7 @@
 
 	let teams = [];
 
-	fetch("src/assets/teams.json")
+	fetch("src/assets/teams.json", {method: 'GET', headers: {'Content-Type': 'application/json'}})
 	.then(res => {
 		res.json()
 		.then(json => {
