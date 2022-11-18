@@ -11,8 +11,8 @@ const fs = require("fs");
 const { env } = require("process");
 // Preloaded
 const teamsJSON = JSON.parse(fs.readFileSync("www/src/assets/teams.json"));
-const certificate = fs.readFileSync(env.CERT || "/etc/letsencrypt/live/budexit.wroclaw.pl/fullchain.pem", 'utf8');
-const privatekey  = fs.readFileSync(env.KEY || "/etc/letsencrypt/live/budexit.wroclaw.pl/privkey.pem", 'utf8');
+const certificate = fs.readFileSync(env.CERT || "/etc/letsencrypt/live/budex.live/fullchain.pem", 'utf8');
+const privatekey  = fs.readFileSync(env.KEY || "/etc/letsencrypt/live/budex.live/privkey.pem", 'utf8');
 const credentials = {key: privatekey, cert: certificate};
 
 const HTTP_PORT = env.PORT || 80;
