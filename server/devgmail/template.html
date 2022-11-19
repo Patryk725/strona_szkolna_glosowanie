@@ -6,6 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Mundial 2022 Budex</title>
 	<style>
+		#logo {
+			float: right;
+			width: 200px;
+		}
+		#main {
+			float: right;
+			width: calc(100% - 200px);
+		}
 		@media only screen and (max-width: 480px) {
 			#logo {
 				float: none;
@@ -20,22 +28,21 @@
 	</style>
 </head>
 <body>
-	<div id="logo" style="float: right; width: 200px;">
+	<div id="logo">
 		<a href="https://www.youtube.com/@BudexTV" target="_blank"><img src="https://budex.live/mail/logo.png" alt="Budex TV" style="width: 100%;"></a>
 	</div>
-	<div id="mail" style="float: right; width: calc(100% - 200px);">
+	<div id="mail">
 		<center><h1>Budex'owe głosowanie z okazji Mundialu 2022</h1></center>
 		<h2>Potwierdź swoją tożsamość aby oddać ważny głos!</h2>
 		<h3>Otwórz poniższy link w ciągu godziny od wysłania zgłoszenia aby potwierdzić że jesteś uczniem naszej szkoły:</h3>
 	</div>
+
 	<div style="clear:both;"></div>
 
 	<div id="lower">
 		<h3><a href="{%LINK}">{%LINK}</a></h3>
-	
 		<h3>Dziękujemy serdecznie za udział w głosowaniu!</h3>
 		<h2 style="float: right;">- Ekipa <a href="https://www.youtube.com/@BudexIT">Budex IT</a></h2>
 	</div>
-
 </body>
 </html>
