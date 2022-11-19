@@ -16,15 +16,20 @@ const privatekey  = fs.readFileSync(env.KEY || "/etc/letsencrypt/live/budex.live
 const credentials = {key: privatekey, cert: certificate};
 const HTTP_PORT = env.PORT || 80;
 const HTTPS_PORT = env.PORT_SSL || 443;
-const gmailUsername = fs.readFileSync()
+const gmailCred = JSON.parse(fs.readFileSync("server/devgmail/creds.json"));
+const gmailUser = gmailCred.address;
+const gmailPass = gmailCred.password;
 
+// Email service
+"use strict";
+const nodemailer = require("nodemailer");
 
 // Email transporter
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
-		user: "lavionperavion2@gmail.com",
-		pass: "pcftdfqxwyncxgee",
+		user: gmailUser,
+		pass: gmailPass,
 	},
 });
 
@@ -33,19 +38,16 @@ const transporter = nodemailer.createTransport({
 //     res.send("This is the hello response");
 // });
 
-// Email service
-"use strict";
-const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
 async function main() {
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '<budexit@gmail.com>', // sender address
-    to: "lavionperavion@example.com, lavionperavion2@example.com, budexit@gmail.com", // list of receivers
-    subject: "Nodemailer pub test 1 ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<h1>Hello world?</h1>", // html body
+    from: '"Budex" <budexit@gmail.com>', // sender address
+    to: "lavionperavion@gmail.com, lavionperavion2@gmail.com, budexit@gmail.com", // list of receivers
+    subject: "Nodemailer pub test 2✔", // Subject line
+    text: "Hello gyus?", // plain text body
+    html: "<h1>i think that's it</h1>", // html body
   });
 
   console.log("Message sent: %s", info.messageId);
