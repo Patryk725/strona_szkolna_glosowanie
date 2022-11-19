@@ -9,6 +9,9 @@ const http = require('http');
 const https = require('https');
 const fs = require("fs");
 const { env } = require("process");
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.raw());
 // Preloads and globals
 const teamsJSON = JSON.parse(fs.readFileSync("www/src/assets/teams.json"));
 const certificate = fs.readFileSync(env.CERT || "/etc/letsencrypt/live/budex.live/fullchain.pem", 'utf8');
@@ -19,11 +22,11 @@ const HTTPS_PORT = env.PORT_SSL || 443;
 const gmailCred = JSON.parse(fs.readFileSync("server/devgmail/creds.json"));
 const gmailUser = gmailCred.address;
 const gmailPass = gmailCred.password;
-const gmailTemplate = fs.readFileSync("server/devgmail/template.html");
+const gmailTemplate = String(fs.readFileSync("server/devgmail/template.html"));
 const gmailLogo = fs.readFileSync("server/devgmail/logo.png");
-
+const expected = JSON.parse(fs.readFileSync("server/dev/expected.json"));
+const expectedMailHost = expected.mailHost;
 // Email service
-"use strict";
 const nodemailer = require("nodemailer");
 
 // Email transporter
@@ -34,21 +37,21 @@ const transporter = nodemailer.createTransport({
 		pass: gmailPass,
 	},
 });
+// Logo image for mails
+app.use("/mail/logo.png", (req, res, next) => {
+	res.send(gmailLogo);
+});
 
-// Handling GET /hello request
-// app.get("/hello", (req, res, next) => {
-//     res.send("This is the hello response");
-// });
 
 // This function will send emails with personalised links to users
-async function sendMail(link) {
+async function sendMail(mail, link) {
 	// get the link into the email text
-	const mailText = String(gmailTemplate).replaceAll("{%LINK}", link);
+	const mailText = gmailTemplate.replaceAll("{%LINK}", link);
 	// send mail with defined transport object
 	const info = await transporter.sendMail({
-		from: '"Budex" <budexit@gmail.com>', // sender address
-		to: "lavionperavion@gmail.com, lavionperavion2@gmail.com, budexit@gmail.com", // list of receivers
-		subject: "Nodemailer pub test 4 ✔", // Subject line
+		from: `"Budex" <${gmailUser}>`, // sender address
+		to: mail, // list of receivers
+		subject: "Potwierdzenie głosu.", // Subject line
 		text: mailText, // plain text body
 		html: mailText, // html body
 	});
@@ -56,15 +59,57 @@ async function sendMail(link) {
 	console.log(`Email Message sent: ${info.messageId}`);
 }
 
-sendMail("https://stackoverflow.com/questions/21464285/how-to-display-a-long-link-in-multiple-lines-via-css").catch(console.error);
+// sendMail("budexit@gmail.com", "https://stackoverflow.com/questions/21464285/how-to-display-a-long-link-in-multiple-lines-via-css").catch(console.error);
 
+app.post("/submit_vote", async(req, res, next) => {
+	console.log(req.body);
 
-// Logo image for mails
-app.use("/mail/logo.png", (req, res, next) => {
-	res.send(gmailLogo);
+	if(!(req.body.name && req.body.surname && req.body.email)) {
+		console.error("User data is incorrect.");
+		res.send("Data Incorrect");
+		return;
+	}
+
+	const mailHost = req.body.email.split('@')[1];
+	// console.log(`User From ${mailHost}`);
+
+	if(mailHost != expectedMailHost) {
+		console.error("User email is from another host.");
+		res.send("Email Incorrect");
+		return;
+	}
+
+	console.log(`Sending Confirmation email to ${req.body.email}`);
+	
+	try {
+		await sendMail(req.body.email, "https://trololololololo.com/");
+	}
+	catch(err) {
+		console.error(err);
+		res.send("Error");
+		return;
+	}
+
+	res.send("Ok");
 });
+// ON THE CLIENT SIDE:
+// fetch("/submit_vote", {
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     method: "POST",
+//     body: JSON.stringify({
+//       name: "a",
+//       surname: "d",
+//       email: "k.b@s.s.pl"
+//     })
+// })
+//   .then(res => res.text())
+// 	.then(txt => {console.log("GOT:" + txt)});
 
-// Actual Files
+
+// Actual Files - Website host
 app.use(express.static('www/dist'));
 app.use("/src/assets/teams.json", (req, res, next) => {
 	res.json(teamsJSON);
