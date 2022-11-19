@@ -1,4 +1,5 @@
 <script>
+    import Navbar from "./Navbar.svelte";
     import Vote from "./Vote.svelte";
 
 </script>
@@ -8,16 +9,7 @@
     <div class="section--left">
     </div>
     <div class="section--right">
-      <nav class="nav--login">
-        <ul class="nav--login_list">
-          <li class="option--login_option">
-            zaloguj się
-          </li>
-          <li class="option--login_option">
-            twój profil
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
       <Vote />
     </div>
   </div>

@@ -17,6 +17,11 @@ img {
 }
 
 @media only screen and (max-width: 800px) {
+
+  .nav--login {
+    display: none;
+  }
+
   .section--left {
     display: none;
   }
@@ -27,6 +32,10 @@ img {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  .voting__submit button {
+    border-radius: 0;
   }
 }
 
@@ -106,6 +115,10 @@ img {
   user-select: none;
 }
 
+.card__img {
+  display: flex;
+  justify-content: center;
+}
 
 .card__desc {
   text-align: center;
