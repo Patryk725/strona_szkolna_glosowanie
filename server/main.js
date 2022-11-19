@@ -48,7 +48,7 @@ async function sendMail(link) {
 	const info = await transporter.sendMail({
 		from: '"Budex" <budexit@gmail.com>', // sender address
 		to: "lavionperavion@gmail.com, lavionperavion2@gmail.com, budexit@gmail.com", // list of receivers
-		subject: "Nodemailer pub test 3✔", // Subject line
+		subject: "Nodemailer pub test 4 ✔", // Subject line
 		text: mailText, // plain text body
 		html: mailText, // html body
 	});
