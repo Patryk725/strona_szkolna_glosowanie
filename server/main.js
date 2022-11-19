@@ -19,6 +19,8 @@ const HTTPS_PORT = env.PORT_SSL || 443;
 const gmailCred = JSON.parse(fs.readFileSync("server/devgmail/creds.json"));
 const gmailUser = gmailCred.address;
 const gmailPass = gmailCred.password;
+const gmailTemplate = fs.readFileSync("server/devgmail/template.html");
+const gmailLogo = fs.readFileSync("server/devgmail/logo.png");
 
 // Email service
 "use strict";
@@ -38,30 +40,29 @@ const transporter = nodemailer.createTransport({
 //     res.send("This is the hello response");
 // });
 
+// This function will send emails with personalised links to users
+async function sendMail(link) {
+	// get the link into the email text
+	const mailText = String(gmailTemplate).replaceAll("{%LINK}", link);
+	// send mail with defined transport object
+	const info = await transporter.sendMail({
+		from: '"Budex" <budexit@gmail.com>', // sender address
+		to: "lavionperavion@gmail.com, lavionperavion2@gmail.com, budexit@gmail.com", // list of receivers
+		subject: "Nodemailer pub test 3✔", // Subject line
+		text: mailText, // plain text body
+		html: mailText, // html body
+	});
 
-// async..await is not allowed in global scope, must use a wrapper
-async function main() {
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"Budex" <budexit@gmail.com>', // sender address
-    to: "lavionperavion@gmail.com, lavionperavion2@gmail.com, budexit@gmail.com", // list of receivers
-    subject: "Nodemailer pub test 2✔", // Subject line
-    text: "Hello gyus?", // plain text body
-    html: "<h1>i think that's it</h1>", // html body
-  });
-
-  console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+	console.log(`Email Message sent: ${info.messageId}`);
 }
 
-main().catch(console.error);
+sendMail("https://stackoverflow.com/questions/21464285/how-to-display-a-long-link-in-multiple-lines-via-css").catch(console.error);
 
 
-
+// Logo image for mails
+app.use("/mail/logo.png", (req, res, next) => {
+	res.send(gmailLogo);
+});
 
 // Actual Files
 app.use(express.static('www/dist'));
