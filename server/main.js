@@ -1,5 +1,5 @@
 //
-// PORT=8080 PORT_SSL=8443 CERT='server/tempssl/cert.pem' KEY='server/tempssl/key.pem' node server/main.js
+// PORT=8080 PORT_SSL=8443 CERT='server/devssl/cert.pem' KEY='server/devssl/key.pem' node server/main.js
 //
 
 // Importing express module
@@ -9,19 +9,57 @@ const http = require('http');
 const https = require('https');
 const fs = require("fs");
 const { env } = require("process");
-// Preloaded
+// Preloads and globals
 const teamsJSON = JSON.parse(fs.readFileSync("www/src/assets/teams.json"));
 const certificate = fs.readFileSync(env.CERT || "/etc/letsencrypt/live/budex.live/fullchain.pem", 'utf8');
 const privatekey  = fs.readFileSync(env.KEY || "/etc/letsencrypt/live/budex.live/privkey.pem", 'utf8');
 const credentials = {key: privatekey, cert: certificate};
-
 const HTTP_PORT = env.PORT || 80;
 const HTTPS_PORT = env.PORT_SSL || 443;
+const gmailUsername = fs.readFileSync()
+
+
+// Email transporter
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: "lavionperavion2@gmail.com",
+		pass: "pcftdfqxwyncxgee",
+	},
+});
 
 // Handling GET /hello request
-app.get("/hello", (req, res, next) => {
-    res.send("This is the hello response");
-});
+// app.get("/hello", (req, res, next) => {
+//     res.send("This is the hello response");
+// });
+
+// Email service
+"use strict";
+const nodemailer = require("nodemailer");
+
+// async..await is not allowed in global scope, must use a wrapper
+async function main() {
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '<budexit@gmail.com>', // sender address
+    to: "lavionperavion@example.com, lavionperavion2@example.com, budexit@gmail.com", // list of receivers
+    subject: "Nodemailer pub test 1 ✔", // Subject line
+    text: "Hello world?", // plain text body
+    html: "<h1>Hello world?</h1>", // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+}
+
+main().catch(console.error);
+
+
+
 
 // Actual Files
 app.use(express.static('www/dist'));
