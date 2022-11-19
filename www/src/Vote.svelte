@@ -19,7 +19,7 @@
 
 <div class="voting">
     <div class="voting__header">
-    <h2>Kto wygra mecz?</h2>
+    <h2>Kto zajmie 1. miejsce?</h2>
     </div>
 
 	<div id="team_view">

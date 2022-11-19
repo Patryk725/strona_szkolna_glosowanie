@@ -64,7 +64,7 @@ async function sendMail(mail, link) {
 app.post("/submit_vote", async(req, res, next) => {
 	console.log(req.body);
 
-	if(!(req.body.name && req.body.surname && req.body.email)) {
+	if(!(req.body.name && req.body.surname && req.body.class && req.body.email)) {
 		console.error("User data is incorrect.");
 		res.send("Data Incorrect");
 		return;
