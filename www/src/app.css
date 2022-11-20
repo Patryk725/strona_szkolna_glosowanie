@@ -18,27 +18,42 @@ img {
 
 @media only screen and (max-width: 800px) {
 
-  .nav--login {
-    display: none;
+  #team_view {
+    flex-wrap: wrap;
   }
 
-  .section--left {
+  .voting {
+    width: max(90vw, 400px);
+    flex-wrap: wrap;
+  }
+
+  .nav--login, .section--left {
     display: none;
   }
 
   .section--right {
     height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
+    flex: 1;
+    padding: 0 calc(20vw - 10rem);
   }
 
   .voting__submit button {
     border-radius: 0;
   }
+
+  .voting__card {
+    width: max(100%, 200px);
+    border: 2px solid transparent !important;
+    box-shadow: 0 0 0.5rem 0.1rem #00000020;
+  }
 }
 
+@media only screen and (max-width: 430px) {
+  #team_view {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
 .wrapper {
   display: flex;
 }
