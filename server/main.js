@@ -27,10 +27,14 @@ const expectedMailHost = expected.mailHost;
 const nodemailer = require("nodemailer");
 const { randomUUID } = require("crypto");
 
+// Voting Mechanism
 const validVotes = JSON.parse(fs.readFileSync("server/dev/votes.json"));;
 const votesToConfirm = {};
-
 function confirmVote(uuid) {
+	if(!votesToConfirm[uuid]) {
+		return false;
+	}
+
 	const vote = votesToConfirm[uuid];
 	validVotes.push({
 		first: vote.first,
@@ -50,9 +54,17 @@ function confirmVote(uuid) {
 	catch(err) {
 		console.error(err);
 	}
+
+	return true;
 }
 function createVoteToConfirm(vote) {
-	const uuid = randomUUID();
+	// Ensure UUID is unique (prolly not needed but i'm pedantic)
+	let genuuid;
+	do {
+		genuuid = randomUUID();
+	} while(votesToConfirm[genuuid]);
+	// Cast vote to the confirm queue
+	const uuid = genuuid;
 	votesToConfirm[uuid] = {
 		first: vote.first,
 		second: vote.second,
@@ -62,6 +74,18 @@ function createVoteToConfirm(vote) {
 		class: vote.class,
 		email: vote.email
 	};
+
+	// DELETE AFTER {
+	console.log(`UUID ${uuid} generated!`);
+	// DELETE AFTER }
+
+	setTimeout(()=>{
+		if(!votesToConfirm[uuid]) {
+			return;
+		}
+		delete votesToConfirm[uuid];
+		console.log(`UUID ${uuid} for ${vote.name} ${vote.surname} at ${vote.email} timed out!`);
+	}, 20*1000);
 	return uuid;
 }
 
@@ -78,11 +102,20 @@ function createVoteToConfirm(vote) {
 // 	class: "Nauczyciel",
 // 	email: "x@example.com"
 // });
+// const voteuuid2 = createVoteToConfirm({
+// 	first: 4,
+// 	second: 23,
+// 	third: 30,
+// 	name: "ekisaf",
+// 	surname: "dsaf",
+// 	class: "4i",
+// 	email: "y@example.com"
+// });
 // console.log(`During:\n To Confirm:`);
 // console.log(votesToConfirm);
 // console.log(` Valid:`);
 // console.log(validVotes);
-// confirmVote(voteuuid);
+// confirmVote(voteuuid2);
 // console.log(`After:\n To Confirm:`);
 // console.log(votesToConfirm);
 // console.log(` Valid:`);
@@ -102,15 +135,15 @@ app.use("/mail/logo.png", (req, res, next) => {
 	res.send(gmailLogo);
 });
 
-
+// Vote Submission
 // This function will send emails with personalised links to users
-async function sendMail(mail, link) {
+async function sendMail(voteuuid) {
 	// get the link into the email text
-	const mailText = gmailTemplate.replaceAll("{%LINK}", link);
+	const mailText = gmailTemplate.replaceAll("{%LINK}", `https://budex.live/confirm_vote?id="${voteuuid}"`);
 	// send mail with defined transport object
 	const info = await transporter.sendMail({
 		from: `"Budex" <${gmailUser}>`, // sender address
-		to: mail, // list of receivers
+		to: votesToConfirm[voteuuid].email, // list of receivers
 		subject: "Potwierdzenie głosu.", // Subject line
 		text: mailText, // plain text body
 		html: mailText, // html body
@@ -118,11 +151,8 @@ async function sendMail(mail, link) {
 
 	console.log(`Email Message sent: ${info.messageId}`);
 }
-
-// sendMail("budexit@gmail.com", "https://stackoverflow.com/questions/21464285/how-to-display-a-long-link-in-multiple-lines-via-css").catch(console.error);
-
 app.post("/submit_vote", async(req, res, next) => {
-	console.log(req.body);
+	// console.log(req.body);
 
 	if( !(
 		// Vote validity
@@ -142,17 +172,27 @@ app.post("/submit_vote", async(req, res, next) => {
 
 	const mailHost = req.body.email.split('@')[1];
 	// console.log(`User From ${mailHost}`);
-
 	if(mailHost != expectedMailHost) {
 		console.error("User email is from another host.");
 		res.send("Email Incorrect");
 		return;
 	}
 
-	console.log(`Sending Confirmation email to ${req.body.email}`);
-	
+	const vote = {
+		first: req.body.first,
+		second: req.body.second,
+		third: req.body.third,
+		name: req.body.name,
+		surname: req.body.surname,
+		class: req.body.class,
+		email: req.body.email,
+	};
+	const voteuuid = createVoteToConfirm(vote);
+
+	console.log(`Sendindg Confirmation email to ${req.body.email}`);
+
 	try {
-		await sendMail(req.body.email, "https://trololololololo.com/");
+		await sendMail(voteuuid);
 	}
 	catch(err) {
 		console.error(err);
@@ -182,6 +222,20 @@ app.post("/submit_vote", async(req, res, next) => {
 // .then(res => res.text())
 // .then(txt => {console.log("GOT:" + txt)});
 
+// Vote Confirmation
+app.get("/confirm_vote", (req, res, next) => {
+	// console.log(req.query);
+	const votedata = votesToConfirm[req.query.id];
+	
+	if(!confirmVote(req.query.id)) {
+		res.send(`Hello, ${req.query.id}! You are not on the list! You were propably timed out!`);
+		return;
+	}
+	
+	res.send(`Hello, ${votedata.name} ${votedata.surname}! You've voted for ${votedata.first} i see? ^^`);
+});
+// ON THE CLIENT SIDE:
+// https://localhost:8443/confirm_vote?id=37e9206c-0d54-4f2b-addc-b77bf697e68d
 
 // Actual Files - Website host
 app.use(express.static('www/dist'));
