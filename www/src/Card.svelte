@@ -1,9 +1,14 @@
 <script>
+    import { getContext } from "svelte/internal";
+
+
 	export let country_name;
 	export let flag_image;
+
+	let setMedal = getContext('setMedal');
 </script>
 
-<div class="voting__card">
+<div class="voting__card" on:click={setMedal} on:keydown={() => {}}>
 	<div class="card__img">
 		<img src="{flag_image}" alt="{country_name} - Flaga">
 	</div>
@@ -12,13 +17,12 @@
 	</div>
 	<div class="trophies">
 		<div class="trophy">
-			<img src="src/assets/b_trophy.png" class="trophy__img" alt="trophy">
-			<img src="src/assets/s_trophy.png" class="trophy__img" alt="trophy">
-			<img src="src/assets/g_trophy.png" class="trophy__img" alt="trophy">
+			<img src="src/assets/b_trophy.png" class="trophy__img" alt="trophy" style="visibility: hidden">
+			<img src="src/assets/s_trophy.png" class="trophy__img" alt="trophy" style="visibility: hidden">
+			<img src="src/assets/g_trophy.png" class="trophy__img" alt="trophy" style="visibility: hidden">
 		</div>
 	</div>
 </div>
-
 <style>
 
 	.voting__card {
