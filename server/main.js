@@ -226,7 +226,7 @@ app.post("/submit_vote", async(req, res, next) => {
 app.get("/confirm_vote", (req, res, next) => {
 	// console.log(req.query);
 	const votedata = votesToConfirm[req.query.id];
-	
+
 	if(!confirmVote(req.query.id)) {
 		res.send(`Hello, ${req.query.id}! You are not on the list! You were propably timed out!`);
 		return;
@@ -234,6 +234,9 @@ app.get("/confirm_vote", (req, res, next) => {
 	
 	res.send(`Hello, ${votedata.name} ${votedata.surname}! You've voted for ${votedata.first} i see? ^^`);
 });
+
+// TODO: INVALIDATE VOTE (If the user told incorrect data)
+
 // ON THE CLIENT SIDE:
 // https://localhost:8443/confirm_vote?id=37e9206c-0d54-4f2b-addc-b77bf697e68d
 
