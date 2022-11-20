@@ -146,9 +146,9 @@ async function sendMail(voteuuid) {
 	.replaceAll("{%NAME}", vote.name)
 	.replaceAll("{%SURNAME}", vote.surname)
 	.replaceAll("{%CLASS}", (vote.class == "Nauczyciel" ? "nauczycielką/em" : ("w klasie " + vote.class)))
-	.replaceAll("{%FIRST}", teamsJSON[vote.first])
-	.replaceAll("{%SECOND}", teamsJSON[vote.second])
-	.replaceAll("{%THIRD}", teamsJSON[vote.third]);
+	.replaceAll("{%FIRST}", teamsJSON[parseInt(vote.first)])
+	.replaceAll("{%SECOND}", teamsJSON[parseInt(vote.second)])
+	.replaceAll("{%THIRD}", teamsJSON[parseInt(vote.third)]);
 	// send mail with defined transport object
 	const info = await transporter.sendMail({
 		from: `"Budex" <${gmailUser}>`, // sender address
