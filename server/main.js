@@ -54,6 +54,8 @@ function confirmVote(uuid) {
 	catch(err) {
 		console.error(err);
 	}
+	
+	console.log(`UUID ${uuid} for ${vote.email} has been confirmed!`);
 
 	return true;
 }
