@@ -1,5 +1,6 @@
 <script>
-    import Vote from "./Vote.svelte";
+  import Login from "./Login.svelte";
+  import Vote from "./Vote.svelte";
 </script>
 
 <main>
@@ -8,6 +9,7 @@
     </div>
     <div class="section--right">
       <Vote />
+      <Login />
     </div>
   </div>
 </main>
