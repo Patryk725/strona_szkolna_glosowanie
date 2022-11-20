@@ -1,7 +1,3 @@
-//
-// PORT=8080 PORT_SSL=8443 CERT='server/devssl/cert.pem' KEY='server/devssl/key.pem' node server/main.js
-//
-
 // Importing express module
 const express = require("express");
 const app = express();
@@ -9,6 +5,7 @@ const http = require('http');
 const https = require('https');
 const fs = require("fs");
 const { env } = require("process");
+// POST Body encoders
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.raw());
@@ -28,6 +25,69 @@ const expected = JSON.parse(fs.readFileSync("server/dev/expected.json"));
 const expectedMailHost = expected.mailHost;
 // Email service
 const nodemailer = require("nodemailer");
+const { randomUUID } = require("crypto");
+
+const validVotes = JSON.parse(fs.readFileSync("server/dev/votes.json"));;
+const votesToConfirm = {};
+
+function confirmVote(uuid) {
+	const vote = votesToConfirm[uuid];
+	validVotes.push({
+		first: vote.first,
+		second: vote.second,
+		third: vote.third,
+		name: vote.name,
+		surname: vote.surname,
+		class: vote.class,
+		email: vote.email
+	});
+
+	delete votesToConfirm[uuid];
+	
+	try {
+		fs.writeFileSync("server/dev/votes.json", JSON.stringify(validVotes));
+	}
+	catch(err) {
+		console.error(err);
+	}
+}
+function createVoteToConfirm(vote) {
+	const uuid = randomUUID();
+	votesToConfirm[uuid] = {
+		first: vote.first,
+		second: vote.second,
+		third: vote.third,
+		name: vote.name,
+		surname: vote.surname,
+		class: vote.class,
+		email: vote.email
+	};
+	return uuid;
+}
+
+// console.log(`Before:\n To Confirm:`);
+// console.log(votesToConfirm);
+// console.log(` Valid:`);
+// console.log(validVotes);
+// const voteuuid = createVoteToConfirm({
+// 	first: 0,
+// 	second: 31,
+// 	third: 22,
+// 	name: "oki",
+// 	surname: "doki",
+// 	class: "Nauczyciel",
+// 	email: "x@example.com"
+// });
+// console.log(`During:\n To Confirm:`);
+// console.log(votesToConfirm);
+// console.log(` Valid:`);
+// console.log(validVotes);
+// confirmVote(voteuuid);
+// console.log(`After:\n To Confirm:`);
+// console.log(votesToConfirm);
+// console.log(` Valid:`);
+// console.log(validVotes);
+
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -64,7 +124,17 @@ async function sendMail(mail, link) {
 app.post("/submit_vote", async(req, res, next) => {
 	console.log(req.body);
 
-	if(!(req.body.name && req.body.surname && req.body.class && req.body.email)) {
+	if( !(
+		// Vote validity
+		req.body.first >= 0 && req.body.first <= 31 &&
+		req.body.second >= 0 && req.body.second <= 31 &&
+		req.body.third >= 0 && req.body.third <= 31 &&
+		// User data
+		req.body.name &&
+		req.body.surname &&
+		req.body.class &&
+		req.body.email 
+	) ) {
 		console.error("User data is incorrect.");
 		res.send("Data Incorrect");
 		return;
@@ -86,7 +156,7 @@ app.post("/submit_vote", async(req, res, next) => {
 	}
 	catch(err) {
 		console.error(err);
-		res.send("Error");
+		res.send("Email Error");
 		return;
 	}
 
@@ -94,19 +164,23 @@ app.post("/submit_vote", async(req, res, next) => {
 });
 // ON THE CLIENT SIDE:
 // fetch("/submit_vote", {
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     method: "POST",
-//     body: JSON.stringify({
-//       name: "a",
-//       surname: "d",
-//       email: "k.b@s.s.pl"
-//     })
+// 	headers: {
+// 	'Accept': 'application/json',
+// 	'Content-Type': 'application/json'
+// 	},
+// 	method: "POST",
+// 	body: JSON.stringify({
+// 		first: 31,
+// 		second: 22,
+// 		third: 15,
+// 		name: "k",
+// 		surname: "b",
+// 		class: "4i",
+// 		email: "k.b@z.p.pl"
+// 	})
 // })
-//   .then(res => res.text())
-// 	.then(txt => {console.log("GOT:" + txt)});
+// .then(res => res.text())
+// .then(txt => {console.log("GOT:" + txt)});
 
 
 // Actual Files - Website host
