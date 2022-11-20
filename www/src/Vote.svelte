@@ -37,14 +37,16 @@
 
 <style>
 	#team_view {
+		max-width: 100%;
 		overflow-y: scroll;
 		height: 70vh;
 		display: grid;
 		flex-direction: column;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 2rem;
+		gap: calc(3vw - .2rem);
 		width: 100%;
 		padding: 1rem;
   		grid-column-start: span 2;
+		flex-wrap: wrap;
 	}
 </style>
