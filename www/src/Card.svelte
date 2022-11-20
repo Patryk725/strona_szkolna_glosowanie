@@ -4,11 +4,19 @@
 
 	export let country_name;
 	export let flag_image;
+	let current_medal = null;
 
 	let setMedal = getContext('setMedal');
+
+	function handleClick() {
+		if (current_medal == null) {
+			current_medal = setMedal();
+		}
+	}
+
 </script>
 
-<div class="voting__card" on:click={setMedal} on:keydown={() => {}}>
+<div class="voting__card" on:click={handleClick} on:keydown={() => {}}>
 	<div class="card__img">
 		<img src="{flag_image}" alt="{country_name} - Flaga">
 	</div>
@@ -17,9 +25,15 @@
 	</div>
 	<div class="trophies">
 		<div class="trophy">
-			<img src="src/assets/b_trophy.png" class="trophy__img" alt="trophy" style="visibility: hidden">
-			<img src="src/assets/s_trophy.png" class="trophy__img" alt="trophy" style="visibility: hidden">
-			<img src="src/assets/g_trophy.png" class="trophy__img" alt="trophy" style="visibility: hidden">
+			{#if current_medal == 1}
+				<img src="src/assets/b_trophy.png" class="trophy__img" alt="trophy">
+			{/if}
+			{#if current_medal == 2}
+				<img src="src/assets/s_trophy.png" class="trophy__img" alt="trophy">
+			{/if}
+			{#if current_medal == 3}
+				<img src="src/assets/g_trophy.png" class="trophy__img" alt="trophy">
+			{/if}
 		</div>
 	</div>
 </div>

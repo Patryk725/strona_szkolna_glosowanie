@@ -8,29 +8,32 @@
 
 	let teams = [];
 
-	export let medal = 3;
+	let medal = 3;
 	let vote = true;
 
 	function setMedal() {
+		const pre_medal = medal;
 		switch (medal) {
 			case 3:
 				console.log('🤓');
 				medal = 2;
 				break;
 			case 2:
-				console.log('😎');
+				console.log('👆');
 				medal = 1;
 				break;
 			case 1:
-				console.log('🥇');
+				console.log('😎👈');
 				vote = false;
 				medal = null;
 			default:
 				break;
 		}
+
+		return pre_medal;
 	}
 
-	setContext('setMedal', setMedal)
+	setContext('setMedal', setMedal);
 
 	
 
