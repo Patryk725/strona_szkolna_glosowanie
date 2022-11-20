@@ -85,7 +85,7 @@ function createVoteToConfirm(vote) {
 		}
 		delete votesToConfirm[uuid];
 		console.log(`UUID ${uuid} for ${vote.name} ${vote.surname} at ${vote.email} timed out!`);
-	}, 20*1000);
+	}, 30*1000);
 	return uuid;
 }
 
@@ -138,12 +138,21 @@ app.use("/mail/logo.png", (req, res, next) => {
 // Vote Submission
 // This function will send emails with personalised links to users
 async function sendMail(voteuuid) {
-	// get the link into the email text
-	const mailText = gmailTemplate.replaceAll("{%LINK}", `https://budex.live/confirm_vote?id="${voteuuid}"`);
+	// the vote-related data
+	const vote = votesToConfirm[voteuuid];
+	// get the user-specific data into the email text
+	const mailText = gmailTemplate
+	.replaceAll("{%LINK}", `https://budex.live/confirm_vote?id=${voteuuid}`)
+	.replaceAll("{%NAME}", vote.name)
+	.replaceAll("{%SURNAME}", vote.surname)
+	.replaceAll("{%CLASS}", (vote.class == "Nauczyciel" ? "nauczycielką/em" : ("w klasie " + vote.class)))
+	.replaceAll("{%FIRST}", teamsJSON[vote.first])
+	.replaceAll("{%SECOND}", teamsJSON[vote.second])
+	.replaceAll("{%THIRD}", teamsJSON[vote.third]);
 	// send mail with defined transport object
 	const info = await transporter.sendMail({
 		from: `"Budex" <${gmailUser}>`, // sender address
-		to: votesToConfirm[voteuuid].email, // list of receivers
+		to: vote.email, // list of receivers
 		subject: "Potwierdzenie głosu.", // Subject line
 		text: mailText, // plain text body
 		html: mailText, // html body
@@ -153,7 +162,6 @@ async function sendMail(voteuuid) {
 }
 app.post("/submit_vote", async(req, res, next) => {
 	// console.log(req.body);
-
 	if( !(
 		// Vote validity
 		req.body.first >= 0 && req.body.first <= 31 &&
@@ -234,11 +242,11 @@ app.get("/confirm_vote", (req, res, next) => {
 	
 	res.send(`Hello, ${votedata.name} ${votedata.surname}! You've voted for ${votedata.first} i see? ^^`);
 });
+// ON THE CLIENT SIDE:
+// https://localhost:8443/confirm_vote?id=37e9206c-0d54-4f2b-addc-b77bf697e68d
 
 // TODO: INVALIDATE VOTE (If the user told incorrect data)
 
-// ON THE CLIENT SIDE:
-// https://localhost:8443/confirm_vote?id=37e9206c-0d54-4f2b-addc-b77bf697e68d
 
 // Actual Files - Website host
 app.use(express.static('www/dist'));
